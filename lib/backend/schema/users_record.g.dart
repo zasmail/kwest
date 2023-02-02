@@ -61,6 +61,22 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.organization;
+    if (value != null) {
+      result
+        ..add('organization')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                DocumentReference, const [const FullType.nullable(Object)])));
+    }
+    value = object.streams;
+    if (value != null) {
+      result
+        ..add('streams')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                DocumentReference, const [const FullType.nullable(Object)])));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -107,6 +123,18 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.phoneNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'organization':
+          result.organization = serializers.deserialize(value,
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
+          break;
+        case 'streams':
+          result.streams = serializers.deserialize(value,
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -134,6 +162,10 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? phoneNumber;
   @override
+  final DocumentReference<Object?>? organization;
+  @override
+  final DocumentReference<Object?>? streams;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -146,6 +178,8 @@ class _$UsersRecord extends UsersRecord {
       this.uid,
       this.createdTime,
       this.phoneNumber,
+      this.organization,
+      this.streams,
       this.ffRef})
       : super._();
 
@@ -166,6 +200,8 @@ class _$UsersRecord extends UsersRecord {
         uid == other.uid &&
         createdTime == other.createdTime &&
         phoneNumber == other.phoneNumber &&
+        organization == other.organization &&
+        streams == other.streams &&
         ffRef == other.ffRef;
   }
 
@@ -175,11 +211,17 @@ class _$UsersRecord extends UsersRecord {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, email.hashCode), displayName.hashCode),
-                        photoUrl.hashCode),
-                    uid.hashCode),
-                createdTime.hashCode),
-            phoneNumber.hashCode),
+                    $jc(
+                        $jc(
+                            $jc(
+                                $jc($jc(0, email.hashCode),
+                                    displayName.hashCode),
+                                photoUrl.hashCode),
+                            uid.hashCode),
+                        createdTime.hashCode),
+                    phoneNumber.hashCode),
+                organization.hashCode),
+            streams.hashCode),
         ffRef.hashCode));
   }
 
@@ -192,6 +234,8 @@ class _$UsersRecord extends UsersRecord {
           ..add('uid', uid)
           ..add('createdTime', createdTime)
           ..add('phoneNumber', phoneNumber)
+          ..add('organization', organization)
+          ..add('streams', streams)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -224,6 +268,15 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get phoneNumber => _$this._phoneNumber;
   set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
 
+  DocumentReference<Object?>? _organization;
+  DocumentReference<Object?>? get organization => _$this._organization;
+  set organization(DocumentReference<Object?>? organization) =>
+      _$this._organization = organization;
+
+  DocumentReference<Object?>? _streams;
+  DocumentReference<Object?>? get streams => _$this._streams;
+  set streams(DocumentReference<Object?>? streams) => _$this._streams = streams;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -241,6 +294,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _uid = $v.uid;
       _createdTime = $v.createdTime;
       _phoneNumber = $v.phoneNumber;
+      _organization = $v.organization;
+      _streams = $v.streams;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -270,6 +325,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             uid: uid,
             createdTime: createdTime,
             phoneNumber: phoneNumber,
+            organization: organization,
+            streams: streams,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

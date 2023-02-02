@@ -19,6 +19,8 @@ abstract class StreamsRecord
 
   DateTime? get time;
 
+  DocumentReference? get user;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -54,6 +56,7 @@ Map<String, dynamic> createStreamsRecordData({
   bool? isLive,
   String? url,
   DateTime? time,
+  DocumentReference? user,
 }) {
   final firestoreData = serializers.toFirestore(
     StreamsRecord.serializer,
@@ -62,7 +65,8 @@ Map<String, dynamic> createStreamsRecordData({
         ..name = name
         ..isLive = isLive
         ..url = url
-        ..time = time,
+        ..time = time
+        ..user = user,
     ),
   );
 

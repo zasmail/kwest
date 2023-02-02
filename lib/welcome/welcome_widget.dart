@@ -52,6 +52,8 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
                       color: Colors.white,
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).title1Family),
                     ),
               ),
             ),
@@ -64,6 +66,8 @@ class _WelcomeWidgetState extends State<WelcomeWidget>
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.normal,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).title3Family),
                     ),
               ),
             ),

@@ -103,11 +103,15 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
                       width: 160,
                       height: 50,
                       color: FlutterFlowTheme.of(context).alternate,
-                      textStyle:
-                          FlutterFlowTheme.of(context).subtitle2.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                              ),
+                      textStyle: FlutterFlowTheme.of(context)
+                          .subtitle2
+                          .override(
+                            fontFamily:
+                                FlutterFlowTheme.of(context).subtitle2Family,
+                            color: Colors.white,
+                            useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                FlutterFlowTheme.of(context).subtitle2Family),
+                          ),
                       elevation: 0,
                       borderSide: BorderSide(
                         color: Colors.transparent,
@@ -123,14 +127,20 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
                     liveText: 'Live',
                     liveTextStyle:
                         FlutterFlowTheme.of(context).subtitle2.override(
-                              fontFamily: 'Poppins',
+                              fontFamily:
+                                  FlutterFlowTheme.of(context).subtitle2Family,
                               color: Colors.red,
+                              useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                  FlutterFlowTheme.of(context).subtitle2Family),
                             ),
                     liveTextBackgroundColor: Color(0x8A000000),
                     durationTextStyle:
                         FlutterFlowTheme.of(context).subtitle2.override(
-                              fontFamily: 'Poppins',
+                              fontFamily:
+                                  FlutterFlowTheme.of(context).subtitle2Family,
                               color: Colors.red,
+                              useGoogleFonts: GoogleFonts.asMap().containsKey(
+                                  FlutterFlowTheme.of(context).subtitle2Family),
                             ),
                     durationTextBackgroundColor: Color(0x8A000000),
                     liveContainerBorderRadius: BorderRadius.circular(8),

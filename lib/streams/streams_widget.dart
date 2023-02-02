@@ -61,8 +61,10 @@ class _StreamsWidgetState extends State<StreamsWidget> {
         title: Text(
           'Streams',
           style: FlutterFlowTheme.of(context).title1.override(
-                fontFamily: 'Poppins',
+                fontFamily: FlutterFlowTheme.of(context).title1Family,
                 color: FlutterFlowTheme.of(context).primaryText,
+                useGoogleFonts: GoogleFonts.asMap()
+                    .containsKey(FlutterFlowTheme.of(context).title1Family),
               ),
         ),
         actions: [],

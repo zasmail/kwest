@@ -48,6 +48,14 @@ class _$StreamsRecordSerializer implements StructuredSerializer<StreamsRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
+    value = object.user;
+    if (value != null) {
+      result
+        ..add('user')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                DocumentReference, const [const FullType.nullable(Object)])));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -87,6 +95,12 @@ class _$StreamsRecordSerializer implements StructuredSerializer<StreamsRecord> {
           result.time = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
+        case 'user':
+          result.user = serializers.deserialize(value,
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -110,12 +124,15 @@ class _$StreamsRecord extends StreamsRecord {
   @override
   final DateTime? time;
   @override
+  final DocumentReference<Object?>? user;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$StreamsRecord([void Function(StreamsRecordBuilder)? updates]) =>
       (new StreamsRecordBuilder()..update(updates))._build();
 
-  _$StreamsRecord._({this.name, this.isLive, this.url, this.time, this.ffRef})
+  _$StreamsRecord._(
+      {this.name, this.isLive, this.url, this.time, this.user, this.ffRef})
       : super._();
 
   @override
@@ -133,14 +150,17 @@ class _$StreamsRecord extends StreamsRecord {
         isLive == other.isLive &&
         url == other.url &&
         time == other.time &&
+        user == other.user &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, name.hashCode), isLive.hashCode), url.hashCode),
-            time.hashCode),
+        $jc(
+            $jc($jc($jc($jc(0, name.hashCode), isLive.hashCode), url.hashCode),
+                time.hashCode),
+            user.hashCode),
         ffRef.hashCode));
   }
 
@@ -151,6 +171,7 @@ class _$StreamsRecord extends StreamsRecord {
           ..add('isLive', isLive)
           ..add('url', url)
           ..add('time', time)
+          ..add('user', user)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -176,6 +197,10 @@ class StreamsRecordBuilder
   DateTime? get time => _$this._time;
   set time(DateTime? time) => _$this._time = time;
 
+  DocumentReference<Object?>? _user;
+  DocumentReference<Object?>? get user => _$this._user;
+  set user(DocumentReference<Object?>? user) => _$this._user = user;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -191,6 +216,7 @@ class StreamsRecordBuilder
       _isLive = $v.isLive;
       _url = $v.url;
       _time = $v.time;
+      _user = $v.user;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -214,7 +240,12 @@ class StreamsRecordBuilder
   _$StreamsRecord _build() {
     final _$result = _$v ??
         new _$StreamsRecord._(
-            name: name, isLive: isLive, url: url, time: time, ffRef: ffRef);
+            name: name,
+            isLive: isLive,
+            url: url,
+            time: time,
+            user: user,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }
