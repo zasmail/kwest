@@ -59,7 +59,7 @@ class _StreamsWidgetState extends State<StreamsWidget> {
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         automaticallyImplyLeading: false,
         title: Text(
-          'Streams',
+          'streams',
           style: FlutterFlowTheme.of(context).title1.override(
                 fontFamily: FlutterFlowTheme.of(context).title1Family,
                 color: FlutterFlowTheme.of(context).primaryText,

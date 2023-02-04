@@ -3,12 +3,14 @@ import '../backend/backend.dart';
 import '../backend/cloud_functions/cloud_functions.dart';
 import '../flutter_flow/flutter_flow_mux_broadcast.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_timer.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:apivideo_live_stream/apivideo_live_stream.dart';
 import 'package:flutter/services.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +47,15 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
   String? _durationString;
   Timer? _timer;
   StreamsRecord? createdStream;
+  int timerMilliseconds = 30000;
+  String timerValue = StopWatchTimer.getDisplayTime(
+    30000,
+    hours: false,
+    minute: false,
+  );
+  StopWatchTimer timerController =
+      StopWatchTimer(mode: StopWatchMode.countDown);
+
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -55,6 +66,8 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
       _isSupportedPlatform = true;
       _initCamera();
     }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -63,6 +76,7 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
     _timer?.cancel();
     Wakelock.disable();
 
+    timerController.dispose();
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -72,11 +86,31 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        automaticallyImplyLeading: false,
+        title: Text(
+          'kwestshun',
+          style: FlutterFlowTheme.of(context).title2.override(
+                fontFamily: 'Magnetic Scriptt',
+                color: FlutterFlowTheme.of(context).primaryText,
+                fontSize: 36,
+                fontWeight: FontWeight.normal,
+                useGoogleFonts: GoogleFonts.asMap()
+                    .containsKey(FlutterFlowTheme.of(context).title2Family),
+                lineHeight: 1,
+              ),
+        ),
+        actions: [],
+        centerTitle: false,
+        elevation: 2,
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: Column(
             mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
                 child: Padding(
@@ -96,7 +130,7 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
                     startButtonText: 'Start Stream',
                     startButtonIcon: Icon(
                       Icons.play_arrow_rounded,
-                      color: Colors.white,
+                      color: Color(0xFFFAF6EB),
                       size: 24,
                     ),
                     startButtonOptions: FFButtonOptions(
@@ -171,6 +205,7 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
                       await streamsRecordReference.set(streamsCreateData);
                       createdStream = StreamsRecord.getDocumentFromData(
                           streamsCreateData, streamsRecordReference);
+                      timerController.onExecute.add(StopWatchExecute.start);
 
                       setState(() {});
                     },
@@ -186,6 +221,31 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
                     },
                   ),
                 ),
+              ),
+              FlutterFlowTimer(
+                initialTime: timerMilliseconds,
+                getDisplayTime: (value) => StopWatchTimer.getDisplayTime(
+                  value,
+                  hours: false,
+                  minute: false,
+                ),
+                timer: timerController,
+                updateStateInterval: Duration(milliseconds: 1000),
+                onChanged: (value, displayTime, shouldUpdate) {
+                  timerMilliseconds = value;
+                  timerValue = displayTime;
+                  if (shouldUpdate) setState(() {});
+                },
+                onEnded: () async {
+                  context.pushNamed('streamViewer');
+                },
+                textAlign: TextAlign.start,
+                style: FlutterFlowTheme.of(context).bodyText1.override(
+                      fontFamily: FlutterFlowTheme.of(context).bodyText1Family,
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                      useGoogleFonts: GoogleFonts.asMap().containsKey(
+                          FlutterFlowTheme.of(context).bodyText1Family),
+                    ),
               ),
             ],
           ),

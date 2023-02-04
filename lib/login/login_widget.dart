@@ -79,7 +79,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
                           child: Text(
-                            'Sign In',
+                            'sign in',
                             style: FlutterFlowTheme.of(context).title1,
                           ),
                         ),
@@ -97,7 +97,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                               context.pushNamed('signup');
                             },
                             child: Text(
-                              'Sign Up',
+                              'sign up',
                               style:
                                   FlutterFlowTheme.of(context).title1.override(
                                         fontFamily: FlutterFlowTheme.of(context)
@@ -123,7 +123,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        'Use the form below, to access your account.',
+                        'let\'s get to it.',
                         style: FlutterFlowTheme.of(context).bodyText2,
                       ),
                     ],
@@ -195,7 +195,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         controller: textController,
                         obscureText: false,
                         decoration: InputDecoration(
-                          labelText: 'Your email address',
+                          labelText: 'email',
                           labelStyle: FlutterFlowTheme.of(context).bodyText2,
                           hintStyle: FlutterFlowTheme.of(context).bodyText2,
                           enabledBorder: OutlineInputBorder(
@@ -248,7 +248,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                         controller: passwordTextController,
                         obscureText: !passwordVisibility,
                         decoration: InputDecoration(
-                          labelText: 'Password',
+                          labelText: 'password',
                           labelStyle: FlutterFlowTheme.of(context).bodyText2,
                           hintStyle: FlutterFlowTheme.of(context).bodyText2,
                           enabledBorder: OutlineInputBorder(
