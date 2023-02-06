@@ -367,7 +367,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          context.pushNamed('livestreamer');
+                          context.pushNamed('streams');
                         },
                         text: 'continue as guest',
                         options: FFButtonOptions(

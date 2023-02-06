@@ -256,10 +256,11 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
                           FlutterFlowTheme.of(context).bodyText1Family),
                     ),
               ),
-              Text(
-                'time\'s up! wrap it up.',
-                style: FlutterFlowTheme.of(context).bodyText1,
-              ),
+              if (FFAppState().timerComplete)
+                Text(
+                  'time\'s up! wrap it up.',
+                  style: FlutterFlowTheme.of(context).bodyText1,
+                ),
               FFButtonWidget(
                 onPressed: () async {
                   context.pushNamed('streams');
