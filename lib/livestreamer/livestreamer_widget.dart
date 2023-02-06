@@ -256,11 +256,33 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
                           FlutterFlowTheme.of(context).bodyText1Family),
                     ),
               ),
-              if (FFAppState().timerComplete)
-                Text(
-                  'time\'s up! wrap it up.',
-                  style: FlutterFlowTheme.of(context).bodyText1,
+              Text(
+                'time\'s up! wrap it up.',
+                style: FlutterFlowTheme.of(context).bodyText1,
+              ),
+              FFButtonWidget(
+                onPressed: () async {
+                  context.pushNamed('streams');
+                },
+                text: 'next',
+                options: FFButtonOptions(
+                  width: 130,
+                  height: 40,
+                  color: FlutterFlowTheme.of(context).primaryColor,
+                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                        fontFamily:
+                            FlutterFlowTheme.of(context).subtitle2Family,
+                        color: Colors.white,
+                        useGoogleFonts: GoogleFonts.asMap().containsKey(
+                            FlutterFlowTheme.of(context).subtitle2Family),
+                      ),
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
                 ),
+              ),
             ],
           ),
         ),
