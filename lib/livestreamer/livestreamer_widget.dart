@@ -16,6 +16,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class LivestreamerWidget extends StatefulWidget {
   const LivestreamerWidget({
@@ -83,6 +84,8 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -206,6 +209,10 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
                       createdStream = StreamsRecord.getDocumentFromData(
                           streamsCreateData, streamsRecordReference);
                       timerController.onExecute.add(StopWatchExecute.start);
+                      // Update timer state
+                      FFAppState().update(() {
+                        FFAppState().timerComplete = false;
+                      });
 
                       setState(() {});
                     },
@@ -237,7 +244,9 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
                   if (shouldUpdate) setState(() {});
                 },
                 onEnded: () async {
-                  context.pushNamed('streamViewer');
+                  FFAppState().update(() {
+                    FFAppState().timerComplete = true;
+                  });
                 },
                 textAlign: TextAlign.start,
                 style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -247,6 +256,11 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
                           FlutterFlowTheme.of(context).bodyText1Family),
                     ),
               ),
+              if (FFAppState().timerComplete)
+                Text(
+                  'time\'s up! wrap it up.',
+                  style: FlutterFlowTheme.of(context).bodyText1,
+                ),
             ],
           ),
         ),
