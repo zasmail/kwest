@@ -92,7 +92,7 @@ class _LivestreamerWidgetState extends State<LivestreamerWidget> {
         title: Text(
           'kwestshun',
           style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Magnetic Scriptt',
+                fontFamily: 'Cardo',
                 color: FlutterFlowTheme.of(context).primaryText,
                 fontSize: 36,
                 fontWeight: FontWeight.normal,
